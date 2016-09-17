@@ -1,0 +1,17 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Coursera Angular</title>
+		<script src="scripts/angular.min.js"></script>
+		<script src="scripts/app.js"></script>
+	</head>
+	<body ng-app="LunchCheck">
+		<h1>Hello Coursera - Angular test</h1>
+		<p>I am thrilled about this course!</p>
+		<div ng-controller="LunchCheckController">
+			<input type="text" ng-model="lunchItems">
+			<input type="button" ng-click="checkIfTooMuch();" ng-value="buttonLabel">
+			<div>{{response}}</div>
+		</div>
+	</body>
+</html>

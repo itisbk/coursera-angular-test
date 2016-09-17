@@ -10,16 +10,24 @@
 			$scope.buttonLabel = btnLbl;
 
 			$scope.checkIfTooMuch = function(){
-				if (validateInput())
+				console.log($scope.lunchItems);
+				if (validateInput($scope.lunchItems))
 				{
 					$scope.response = checkItems($scope.lunchItems);
 					console.log($scope.response);
 				}
 				else
 				{
-					$scope.response = 
+					$scope.response = "Empty";
 				}
 			};
+
+			function validateInput(items) {
+				if (items!="")
+				{
+					return true;
+				}
+			}
 
 			function checkItems(items) {
 				console.log(">>>"+items);

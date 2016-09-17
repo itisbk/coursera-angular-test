@@ -18,7 +18,7 @@
 				}
 				else
 				{
-					$scope.response = "Empty";
+					$scope.response = "Please enter data first";
 				}
 			};
 

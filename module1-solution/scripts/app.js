@@ -2,7 +2,11 @@
 	'use strict';
 	angular.module('LunchCheck', [])
 
-		.controller('LunchCheckController', function($scope){
+		.controller('LunchCheckController', LunchCheckController);
+
+		LunchCheckController.$inject = ['$scope'];
+
+		function LunchCheckController($scope) {
 			$scope.lunchItems = "Enter a comma separated list of lunch items";
 			var lItems = $scope.lunchItems;
 
@@ -43,5 +47,5 @@
 					return "Enjoy";
 				}
 			}
-		});
+		};
 })();

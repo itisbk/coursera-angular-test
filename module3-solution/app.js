@@ -1,69 +1,92 @@
-(function() {
-	'use strict';
-	angular.module('NarrowItDownApp', [])
-		.controller('NarrowItDownController', NarrowItDownController)
-		.service('MenuSearchService', MenuSearchService)
-		.constant('ApiBasePath', "http://davids-restaurant.herokuapp.com");
+(function () {
+'use strict';
 
-		MenuSearchService.$inject = ['$http', 'ApiBasePath']
-		function MenuSearchService($http, ApiBasePath) {
-			var service = this;
-			service.foundItems = [];
+angular.module('MenuCategoriesApp', [])
+.controller('NarrowItDownController', NarrowItDownController)
+.service('MenuSearchService', MenuSearchService)
+.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com")
+.directive('foundItems', FoundItemsDirective);
 
-			service.getMatchedMenuItems = function(searchTerm) {
-				console.log("calling service...");
-				$http({
-					method: "GET",
-						url: (ApiBasePath + "/menu_items.json")
-				}).then(function (response) {
-						var menuItems = response.data;
-						console.log(menuItems.menu_items.length);
+function FoundItemsDirective() {
+  var ddo = {
+    scope: {
+      found: '<',
+      nothingFound: '&'
+    },
+    controller: NarrowItDownController,
+    bindToController: true,
+    controllerAs: 'narrow',
+    templateUrl: 'foundItems.html'
 
-						for (var i = 0; i < menuItems.menu_items.length; i++) {
-							//console.log("menuItems.menu_items[i].description ", menuItems.menu_items[i].description);
-							if (menuItems.menu_items[i].description.includes(searchTerm))
-							{
-								service.foundItems.push(menuItems.menu_items[i]);
-							}
-						}
-						//console.log("Found items: ", service.foundItems.length);
-				})
-				.catch(function (error) {
-					console.log("Something went terribly wrong.");
-				});
+  };
 
-				return service.foundItems;
-			};
-		};
+  return ddo;
+}
 
-		NarrowItDownController.$inject = ['MenuSearchService'];
-		function NarrowItDownController(MenuSearchService) {
-			var menu = this;
-			menu.found = [];
-			menu.search = "";
-			menu.error = false;
+NarrowItDownController.$inject = ['$scope', 'MenuSearchService'];
+function NarrowItDownController($scope, MenuSearchService) {
+  var narrow = this;
+  narrow.found = MenuSearchService.getFoundItems();
 
-			menu.narrowDown = function() {
-				console.log("menu.search", menu.search);
-				if (menu.search === "")
-				{
-					menu.error = true;
-					return;
-				}
-				menu.found = MenuSearchService.getMatchedMenuItems(menu.search);
-				console.log("Found ", menu.found.length);
-				if (menu.found.length >= 1)
-				{
-					menu.error = false;
-				}
-				//console.log("Found items: ", menu.found);
-			};
+  var _nothingFound = false;
+  narrow.getAllMenuItems = function () {
+    _nothingFound = false;
 
-		}
-		
-		
-		
-		
+    if (!$scope.searchTerm || $scope.searchTerm.length === 0) {
+      _nothingFound = true;
+    } else {
+      MenuSearchService.getMatchedMenuItems($scope.searchTerm)
+      .then(function (response) {
+        narrow.found = response;
+        if (narrow.found.length === 0) {
+          _nothingFound = true;
+        }
+      })
+      .catch(function (error) {
+
+      });
+    }
+  };
+
+  narrow.removeItem = function (index) {
+    MenuSearchService.removeItem(index.index);
+  };
+
+  narrow.nothingFound = function () {
+    return _nothingFound;
+  };
+}
+
+
+MenuSearchService.$inject = ['$http', 'ApiBasePath'];
+function MenuSearchService($http, ApiBasePath) {
+  var search = this;
+  var found  = [];
+  search.getMatchedMenuItems = function (searchTerm) {
+    found = [];
+    return $http({
+      method: "GET",
+      url: (ApiBasePath + "/menu_items.json")
+    }).then(function (result) {
+        for (var i = 0; i < result.data.menu_items.length; i++) {
+          if (result.data.menu_items[i].description.search(searchTerm) !== -1) {
+            found.push(result.data.menu_items[i]);
+          }
+        }
+
+        return found;
+    });
+  };
+
+  search.getFoundItems = function () {
+    return found;
+  };
+
+  search.removeItem = function (itemIndex) {
+    found.splice(itemIndex, 1);
+  };
+
+}
 
 
 })();

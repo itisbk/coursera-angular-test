@@ -1,31 +1,30 @@
+
 <!doctype html>
-<html lang="en">
+<html lang="en"  ng-app='MenuCategoriesApp'>
   <head>
     <title>Narrow Down Your Menu Choice</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="angular.min.js"></script>
-    <script src="app.js"></script>
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/styles.css">
   </head>
-<body ng-app="NarrowItDownApp">
-   <div class="container" ng-controller="NarrowItDownController as narrowDownCtrl">
+<body>
+   <div class="container" ng-controller='NarrowItDownController as narrow'>
     <h1>Narrow Down Your Chinese Menu Choice</h1>
 
     <div class="form-group">
-      <input type="text" placeholder="search term" class="form-control" ng-model="narrowDownCtrl.search">
+      <input type="text" placeholder="search term" ng-model="searchTerm" class="form-control">
     </div>
     <div class="form-group narrow-button">
-      <button class="btn btn-primary" ng-click="narrowDownCtrl.narrowDown()">Narrow It Down For Me!</button>
-      <div class="emptyMessage" ng-if="narrowDownCtrl.error">Nothing found</div>
+      <button class="btn btn-primary" ng-click="narrow.getAllMenuItems();">Narrow It Down For Me!</button>
     </div>
 
-    <!-- Bonus loader (see Bonus section of the assignment) -->
-    <items-loader-indicator></items-loader-indicator>
+    <br /><br /><br />
 
-    <!-- found-items should be implemented as a component -->
-    <found-items found-items="...." on-remove="...."></found-items>
+    <found-items found="narrow.found"></found-items>
+    <div class="error" ng-if="narrow.nothingFound()">Nothing found</div>
   </div>
 
+  <script src="angular.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

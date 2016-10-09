@@ -1,9 +1,7 @@
-<table class="table table-bordered table-hover">
-  <tbody>
-    <tr ng-repeat="category in $ctrl.categories">
-        <td ui-sref="categories.items({category: category.short_name})">
+<ul>
+	<li ng-repeat="category in $ctrl.categories">
+		<a ui-sref="categories.items({category: category.short_name})">
             {{ category.name }}
-        </td>
-    </tr>
-</tbody>
-</table>
+        </a>
+	</li>
+</ul>

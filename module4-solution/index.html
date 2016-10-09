@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='MenuApp'>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Restaurant menu REST API</title>
+  </head>
+  <body>
+    <h1>Welcome to Restaurant menu REST API application</h1>
+
+    <ui-view></ui-view>
+
+    <!-- Libraries -->
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
+
+    <!-- Modules -->
+    <script src="src/menuapp/menuapp.module.js"></script>
+
+    <!-- Routes -->
+    <script src="src/routes.js"></script>
+
+    <!-- 'menuapp' module artifacts -->
+    <script src="src/menuapp/menuapp.component.js"></script>
+    <script src="src/menuapp/main-menuapp.controller.js"></script>
+    <script src="src/menuapp/menuapp.service.js"></script>
+
+  </body>
+</html>

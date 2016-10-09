@@ -1,29 +1,28 @@
-<!DOCTYPE html>
-<html lang="en" ng-app='MenuApp'>
+
+<!doctype html>
+<html lang="en" ng-app="MenuApp">
   <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>Restaurant menu REST API</title>
+    <title>Restaurant menu REST API application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
   </head>
-  <body>
-    <h1>Welcome to Restaurant menu REST API application</h1>
+<body>
 
-    <ui-view></ui-view>
+  <h1>Welcome to Restaurant menu REST API application</h1>
 
-    <!-- Libraries -->
-    <script src="lib/angular.min.js"></script>
-    <script src="lib/angular-ui-router.min.js"></script>
+  <ui-view></ui-view>
 
-    <!-- Modules -->
-    <script src="src/menuapp/menuapp.module.js"></script>
+  <script src="angular.min.js"></script>
+  <script src="angular-ui-router.min.js"></script>
+  <script src="menuapp.module.js"></script>
+  <script src="data.module.js"></script>
+  <script src="routes.js"></script>
 
-    <!-- Routes -->
-    <script src="src/routes.js"></script>
-
-    <!-- 'menuapp' module artifacts -->
-    <script src="src/menuapp/menuapp.component.js"></script>
-    <script src="src/menuapp/main-menuapp.controller.js"></script>
-    <script src="src/menuapp/menuapp.service.js"></script>
-
-  </body>
+  <script src="categories-list.controller.js"></script>
+  <script src="items-list.controller.js"></script>
+  <script src="categories.component.js"></script>
+  <script src="items.component.js"></script>
+  <script src="menudata.service.js"></script>
+</body>
 </html>
